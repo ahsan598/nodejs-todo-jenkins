@@ -62,27 +62,27 @@ pipeline {
             }
         }
 
-        // stage('Run Unit Tests') {
-        //     steps {
-        //         sh '''
-        //             echo "Running tests..."
-        //             npm test
-        //         '''
-        //     }
-        //     post {
-        //         always {
-        //             // Generate test reports
-        //             publishHTML([
-        //                 allowMissing: false,
-        //                 alwaysLinkToLastBuild: true,
-        //                 keepAll: true,
-        //                 reportDir: 'coverage',
-        //                 reportFiles: 'index.html',
-        //                 reportName: 'Coverage Report'
-        //             ])
-        //         }
-        //     }
-        // }
+        stage('Run Unit Tests') {
+            steps {
+                sh '''
+                    echo "Running tests..."
+                    npm test
+                '''
+            }
+            post {
+                always {
+                    // Generate test reports
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'coverage',
+                        reportFiles: 'index.html',
+                        reportName: 'Coverage Report'
+                    ])
+                }
+            }
+        }
 
         stage('Code Quality & Security') {
             parallel {
@@ -190,22 +190,6 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Pipeline completed successfully!'
-            emailext(
-                subject: "Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Build succeeded. Check console output at ${env.BUILD_URL}",
-                to: 'your-email@example.com'
-            )
-        }
-        failure {
-            echo '❌ Pipeline failed. Check logs.'
-            emailext(
-                subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Build failed. Check console output at ${env.BUILD_URL}",
-                to: 'your-email@example.com'
-            )
-        }
         always {
             echo 'Cleaning up Docker images...'
             sh """
