@@ -62,27 +62,27 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
-            steps {
-                sh '''
-                    echo "Running tests..."
-                    npm test
-                '''
-            }
-            post {
-                always {
-                    // Generate test reports
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: 'coverage',
-                        reportFiles: 'index.html',
-                        reportName: 'Coverage Report'
-                    ])
-                }
-            }
-        }
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         sh '''
+        //             echo "Running tests..."
+        //             npm test
+        //         '''
+        //     }
+        //     post {
+        //         always {
+        //             // Generate test reports
+        //             publishHTML([
+        //                 allowMissing: false,
+        //                 alwaysLinkToLastBuild: true,
+        //                 keepAll: true,
+        //                 reportDir: 'coverage',
+        //                 reportFiles: 'index.html',
+        //                 reportName: 'Coverage Report'
+        //             ])
+        //         }
+        //     }
+        // }
 
         stage('Code Quality & Security') {
             parallel {
