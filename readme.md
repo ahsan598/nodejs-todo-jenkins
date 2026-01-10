@@ -13,7 +13,6 @@ A simple, containerized Todo List application built with **Node.js and Express**
 ### ⚙️ Architect Diagram
 ![Architect Diagram](/assets/workflow.png)
 
----
 
 ### 📋 Prerequisites
 
